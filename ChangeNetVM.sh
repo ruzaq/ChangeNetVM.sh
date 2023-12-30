@@ -1,22 +1,14 @@
 #!/bin/bash
 # ChangeNetVM.sh
 
-# Check if notify-send, zenity, and xdotool are available
-if ! command -v notify-send &> /dev/null || ! command -v zenity &> /dev/null || ! command -v xdotool &> /dev/null; then
-    echo "Error: notify-send, zenity, and xdotool are required. Please install them to use notifications, dialogs, and window ID detection." >&2
+# Check if notify-send and zenity are available
+if ! command -v notify-send &> /dev/null || ! command -v zenity &> /dev/null &> /dev/null; then
+    echo "Error: notify-send and zenity are required. Please install them to use notifications, dialogs, and window ID detection." >&2
     exit 1
 fi
 
-# Get the window ID of the focused window
-WINDOW_ID=$(xdotool getwindowfocus)
-
-while read -r vm; do
-    if xprop -id "${WINDOW_ID}" | grep -q "_QUBES_VMNAME(STRING) = \"${vm}\""; then
-        notify-send "Info" "Detected AppVM: ${vm}"
-        APPVM="${vm}"
-        break
-    fi
-done < <(qvm-ls --no-spinner --fields=name | grep "^[^ ]" | grep -v NAME)
+APPVM="$(xprop -notype -id $(xprop -root -notype _NET_ACTIVE_WINDOW | sed -e 's/^.*# //' -e 's/,.*$//') _QUBES_VMNAME | cut -d '"' -f 2)"
+notify-send "Info" "Detected AppVM: ${APPVM}"
 
 if [ -n "${APPVM}" ]; then
     # Get the list of NetVMs that provide network connectivity
