@@ -14,13 +14,12 @@ Before using this script, ensure that the following tools are installed on your 
 
 - notify-send
 - zenity
-- xdotool
 
 These tools are essential for providing notifications, user dialogs, and window ID detection.
 
 ```bash
 # Check and install prerequisites
-dom0# sudo qubes-dom0-update notify-send zenity xdotool
+dom0# sudo qubes-dom0-update notify-send zenity
 ```
 # Usage
 1. Make the script executable:
