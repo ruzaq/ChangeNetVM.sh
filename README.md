@@ -1,6 +1,9 @@
 # ChangeNetVM.sh
 QubesOS script to change NetVM of the window focused
 
+![ChangeNetVM.sh screenshot](ChangeNetVM.png "ChangeNetVM.sh screenshot")
+
+
 # Description
 ChangeNetVM.sh is a Bash script designed for use in a Qubes OS environment.
 
